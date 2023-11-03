@@ -6,7 +6,8 @@
           <div class="px-4 py-2 border border-b/20">Add New Streetlight</div>
           <div class="card">
             <div class="card-body pt-2 pb-6 px-4">
-              <form action="">
+              <form action="{{ route('streetlight.store') }}" method="POST">
+                @csrf
                 <div>
                   <label class="label" for="name">
                     <span class="label-text font-bold">
@@ -92,88 +93,100 @@
                     @enderror
                   </div>
                 </div>
-                <div class="mt-2">
-                  <label class="label" for="model">
-                    <span class="label-text font-bold">
-                      Model
-                    </span>
-                  </label>
-                  <select class="select select-bordered select-secondary select-sm rounded-sm w-full" id="model"
-                    name="model">
-                    <option value>-- Choose Streetlight Model --</option>
-                    <option value="Classic">Classic</option>
-                    <option value="Solar-Powered">Solar-Powered</option>
-                    <option value="Modern LED">Modern LED</option>
-                    <option value="Decorative">Decorative</option>
-                    <option value="High-Pole">High-Pole</option>
-                    <option value="Traditional Lamp">Traditional Lamp</option>
-                    <option value="Smart">Smart</option>
-                    <option value="Industrial High-Bay">Industrial High-Bay</option>
-                    <option value="Vintage Lantern">Vintage Lantern</option>
-                    <option value="Minimalist">Minimalist</option>
-                  </select>
-                  @error('model')
-                    <div class="text-error mt-1">
-                      {{ $message }}
-                    </div>
-                  @enderror
+                <div class="mt-2 grid lg:grid-cols-2 md:grid-cols-1 gap-4">
+                  <div>
+                    <label class="label" for="model">
+                      <span class="label-text font-bold">
+                        Model
+                      </span>
+                    </label>
+                    <select class="select select-bordered select-secondary select-sm rounded-sm w-full" id="model"
+                      name="model">
+                      <option value>-- Choose Streetlight Model --</option>
+                      <option value="Classic">Classic</option>
+                      <option value="Solar-Powered">Solar-Powered</option>
+                      <option value="Modern LED">Modern LED</option>
+                      <option value="Decorative">Decorative</option>
+                      <option value="High-Pole">High-Pole</option>
+                      <option value="Traditional Lamp">Traditional Lamp</option>
+                      <option value="Smart">Smart</option>
+                      <option value="Industrial High-Bay">Industrial High-Bay</option>
+                      <option value="Vintage Lantern">Vintage Lantern</option>
+                      <option value="Minimalist">Minimalist</option>
+                    </select>
+                    @error('model')
+                      <div class="text-error mt-1">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                  </div>
+                  <div>
+                    <label class="label" for="height">
+                      <span class="label-text font-bold">
+                        Height
+                      </span>
+                    </label>
+                    <input class="input input-sm input-bordered rounded-sm input-secondary w-full" id="height"
+                      placeholder="Height (m)" type="number" name="height" value="{{ old('height') }}">
+                    @error('height')
+                      <div class="text-error mt-1">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                  </div>
                 </div>
-                <div class="mt-2">
-                  <label class="label" for="height">
-                    <span class="label-text font-bold">
-                      Height
-                    </span>
-                  </label>
-                  <input class="input input-sm input-bordered rounded-sm input-secondary w-full" id="height"
-                    placeholder="Height" type="text" name="height" value="{{ old('height') }}">
-                  @error('height')
-                    <div class="text-error mt-1">
-                      {{ $message }}
+                <div class="mt-2 grid lg:grid-cols-3 md:grid-cols-1 gap-4">
+                  <div class="mt-2">
+                    <label class="label" for="power_rate">
+                      <span class="label-text font-bold">
+                        Power Rate
+                      </span>
+                    </label>
+                    <input class="input input-sm input-bordered rounded-sm input-secondary w-full" id="power_rate"
+                      placeholder="Power Rate (W)" type="number" name="power_rate" value="{{ old('power_rate') }}">
+                    @error('power_rate')
+                      <div class="text-error mt-1">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                  </div>
+                  <div class="mt-2">
+                    <label class="label" for="voltage_rate">
+                      <span class="label-text font-bold">
+                        Voltage
+                      </span>
+                    </label>
+                    <div class="join">
+                      <input class="join-item input input-sm input-bordered rounded-sm input-secondary w-full"
+                        id="voltage_rate_rate" placeholder="Voltage (V)" type="number" name="voltage_rate_rate"
+                        value="{{ old('voltage_rate') }}">
+                      <select class="join-item select rounded-sm select-bordered select-sm select-secondary"
+                        id="voltage_rate_type" name="voltage_rate_type">
+                        <option value="AC">AC</option>
+                        <option value="DC">DC</option>
+                      </select>
                     </div>
-                  @enderror
-                </div>
-                <div class="mt-2">
-                  <label class="label" for="power_rate">
-                    <span class="label-text font-bold">
-                      Power Rate
-                    </span>
-                  </label>
-                  <input class="input input-sm input-bordered rounded-sm input-secondary w-full" id="power_rate"
-                    placeholder="Power Rate" type="text" name="power_rate" value="{{ old('power_rate') }}">
-                  @error('power_rate')
-                    <div class="text-error mt-1">
-                      {{ $message }}
-                    </div>
-                  @enderror
-                </div>
-                <div class="mt-2">
-                  <label class="label" for="voltage_rate">
-                    <span class="label-text font-bold">
-                      Voltage
-                    </span>
-                  </label>
-                  <input class="input input-sm input-bordered rounded-sm input-secondary w-full" id="voltage_rate"
-                    placeholder="Voltage" type="text" name="voltage_rate" value="{{ old('voltage_rate') }}">
-                  @error('voltage_rate')
-                    <div class="text-error mt-1">
-                      {{ $message }}
-                    </div>
-                  @enderror
-                </div>
-                <div class="mt-2">
-                  <label class="label" for="illumination_level">
-                    <span class="label-text font-bold">
-                      Illumination Level
-                    </span>
-                  </label>
-                  <input class="input input-sm input-bordered rounded-sm input-secondary w-full" id="illumination_level"
-                    placeholder="Illumination Level" type="text" name="illumination_level"
-                    value="{{ old('illumination_level') }}">
-                  @error('illumination_level')
-                    <div class="text-error mt-1">
-                      {{ $message }}
-                    </div>
-                  @enderror
+                    @error('voltage_rate_rate')
+                      <div class="text-error mt-1">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                  </div>
+                  <div class="mt-2">
+                    <label class="label" for="illumination_level">
+                      <span class="label-text font-bold">
+                        Illumination Level
+                      </span>
+                    </label>
+                    <input class="input input-sm input-bordered rounded-sm input-secondary w-full"
+                      id="illumination_level" placeholder="Illumination Level (lux)" type="number"
+                      name="illumination_level" value="{{ old('illumination_level') }}">
+                    @error('illumination_level')
+                      <div class="text-error mt-1">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                  </div>
                 </div>
                 <div class="mt-2">
                   <label class="label" for="manufacturer">

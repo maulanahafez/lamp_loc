@@ -19,7 +19,7 @@
               </div>
             </div>
             <div>
-              <form action="{{ route('login.login') }}" method="post">
+              <form action="{{ route('auth.login') }}" method="post">
                 @csrf
                 <div>
                   <label class="label" for="email">
@@ -50,8 +50,9 @@
                   @enderror
                 </div>
                 <div class="mt-4 space-y-2">
-                  <button class="btn btn-secondary w-full btn-sm capitalize text-white" type="submit">Login</button>
-                  <a class="btn btn-neutral w-full btn-sm capitalize text-white" href="/">Back</a>
+                  <button class="btn btn-secondary w-full rounded-sm btn-sm capitalize text-white"
+                    type="submit">Login</button>
+                  <a class="btn btn-neutral w-full rounded-sm btn-sm capitalize text-white" href="/">Back</a>
                 </div>
               </form>
             </div>

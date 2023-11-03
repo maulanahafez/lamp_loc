@@ -17,9 +17,10 @@ class StreetlightFactory extends Factory
     public function definition(): array
     {
         return [
+            // 'order' => fake()->numberBetween(0,10),
             'name' => strtoupper(fake()->bothify('??##')),
-            'lat' => fake()->latitude('-8.40', '-6.60'),
-            'long' => fake()->longitude('108.70', '111.00'),
+            'lat' => fake()->latitude(-7.456175, -7.437622),
+            'long' => fake()->longitude(109.267090, 109.320992),
             'type' => $this->getRandomStreetlightType(),
             'status' => $this->getRandomStreetlightStatus(),
             'model' => $this->getRandomStreetlightModel(),

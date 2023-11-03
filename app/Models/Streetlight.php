@@ -11,6 +11,11 @@ class Streetlight extends Model
 
     protected $guarded = ['id'];
 
+    public function streetlight_group()
+    {
+        return $this->belongsTo(StreetlightGroup::class, 'streetlight_group_id');
+    }
+
     public function reports()
     {
         return $this->hasMany(Report::class, 'streetlight_id');

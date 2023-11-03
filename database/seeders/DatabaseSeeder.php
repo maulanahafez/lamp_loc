@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Image;
 use App\Models\Report;
 use App\Models\Streetlight;
+use App\Models\StreetlightGroup;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -29,6 +30,16 @@ class DatabaseSeeder extends Seeder
             'password' => '123123123'
         ]);
 
-        Streetlight::factory()->count(10)->has(Report::factory()->count(2))->has(Image::factory()->count(2))->create();
+        StreetlightGroup::factory()->count(5)->create();
+        $groups = StreetlightGroup::all();
+        foreach ($groups as $g) {
+            for ($i = 1; $i <= 10; $i++) {
+                Streetlight::factory()->count(1)->state([
+                    'streetlight_group_id' => $g->id,
+                    'order' => $i,
+                ])->has(Report::factory()->count(2))->has(Image::factory()->count(2))->create();
+            }
+        }
+        // Streetlight::factory()->count(100)->has(Report::factory()->count(2))->has(Image::factory()->count(2))->create();
     }
 }

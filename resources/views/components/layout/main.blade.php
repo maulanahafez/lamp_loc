@@ -6,19 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Streetlamp Locator</title>
+
   {{-- CSS --}}
   @vite('resources/css/app.css')
-  <link rel="stylesheet" href="{{ asset('css/dataTables.tailwindcss.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/dataTables.tailwindcss.min.css') }}">
+
   {{-- JS --}}
   <script src="{{ asset('js/jquery.min.js') }}"></script>
-  <script src="{{ asset('js/alpine.min.js') }}"></script>
+  <script defer src="{{ asset('js/alpine.min.js') }}"></script>
   <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('js/dataTables.tailwindcss.min.js') }}"></script>
   <script src="{{ asset('js/select2.min.js') }}"></script>
+  <script src="{{ asset('js/sweetalert2.js') }}"></script>
+
+  {{-- Font Awesome --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  {{-- Leaflet.js --}}
+  <link rel="stylesheet" href="{{ asset('leaflet/leaflet.css') }}"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="{{ asset('leaflet/leaflet.js') }}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
 </head>
 
 <body>
@@ -34,7 +45,7 @@
     </div>
   </header>
 
-  <nav class="border-b bg-white shadow-md sticky top-0 z-50">
+  <nav class="border-b bg-white shadow-md sticky top-0 z-[1000]">
     <div class="container mx-auto px-4 pt-2">
       <ul class="tabs">
         <a class="tab tab-bordered text-black pb-2 {{ Route::is('dashboard.index') ? 'tab-active' : null }}"
@@ -49,6 +60,13 @@
           <div class="flex items-center gap-x-2">
             <i class="fa-solid fa-bolt"></i>
             <span class="text-sm">Streetlight</span>
+          </div>
+        </a>
+        <a class="tab tab-bordered text-black pb-2 {{ Route::is('streetlight_group.index') ? 'tab-active' : null }}"
+          href="{{ route('streetlight_group.index') }}">
+          <div class="flex items-center gap-x-2">
+            <i class="fa-solid fa-road"></i>
+            <span class="text-sm">Group</span>
           </div>
         </a>
         <a class="tab tab-bordered text-black pb-2 {{ Route::is('report.index') ? 'tab-active' : null }}"
@@ -68,10 +86,20 @@
     </div>
   </nav>
 
-  <div class="container mx-auto px-4 py-4">
+  <div class="container mx-auto px-4 pt-4 pb-12">
     @yield('content')
   </div>
 
+  @include('sweetalert::alert')
+
+  <script>
+    var newIcon = L.icon({
+      iconUrl: "{{ asset('leaflet/images/streetlight.png') }}",
+      iconSize: [64, 64],
+      iconAnchor: [32, 64],
+      popupAnchor: [0, -32]
+    });
+  </script>
   @yield('js')
 </body>
 
