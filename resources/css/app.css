@@ -2,6 +2,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.required {
+    @apply after:content-['*'] after:ml-0.5 after:text-red-500 after:absolute;
+}
+
 .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -9,4 +13,28 @@
 
 .no-scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+.select2-container--default .select2-selection--single {
+    @apply !h-[32px] !border !border-secondary !rounded-sm;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+#reader {
+    @apply !w-full !border-secondary !shadow-sm !rounded-sm;
+}
+
+#reader__scan_region > img {
+    @apply !mx-auto;
+}
+
+#html5-qrcode-button-camera-permission {
+    @apply !btn !btn-sm !btn-secondary !capitalize !rounded-sm;
+}
+
+#html5-qrcode-anchor-scan-type-change {
+    @apply !btn !btn-sm !btn-link !text-secondary !btn-secondary !capitalize !rounded-sm;
 }

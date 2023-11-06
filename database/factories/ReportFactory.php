@@ -33,7 +33,7 @@ class ReportFactory extends Factory
 
     private function getRandomReportStatus()
     {
-        $statuses = ['Aktif', 'Rusak', 'Dalam Pemeliharaan', 'Mati'];
+        $statuses = ['In Progress', 'Completed'];
         $randomIndex = array_rand($statuses);
         return $statuses[$randomIndex];
     }

@@ -1,23 +1,25 @@
 <x-layout.main>
   @section('content')
     @if ($group)
-      <div class="w-full h-80" id="map"></div>
+      <form class="join justify-center w-full" action="{{ route('streetlight_group.clear_session') }}" method="post">
+        @csrf
+        <button class="join-item btn btn-sm btn-outline btn-neutral rounded-sm capitalize" type="submit"
+          href="{{ route('streetlight_group.create') }}">
+          <i class="fa-solid fa-eraser"></i>
+        </button>
+        <button class="join-item btn btn-sm btn-outline btn-neutral rounded-sm capitalize" id="toggle" type="button">
+          <i class="fa-solid fa-eye-slash" id="icon"></i>
+        </button>
+      </form>
+      <div class="mt-4">
+        <div class="w-full h-80" id="map"></div>
+      </div>
     @endif
     <div class="mt-4 flex flex-wrap gap-2">
       <a class="btn btn-sm btn-primary rounded-sm capitalize" href="{{ route('streetlight_group.create') }}">
         <i class="fa-solid fa-plus"></i>
         Add Group
       </a>
-      @if ($group)
-        <form action="{{ route('streetlight_group.clear_session') }}" method="post">
-          @csrf
-          <button class="btn btn-sm btn-outline rounded-sm capitalize" type="submit"
-            href="{{ route('streetlight_group.create') }}">
-            <i class="fa-solid fa-eraser"></i>
-            Clear Session
-          </button>
-        </form>
-      @endif
     </div>
     <div class="mt-2 overflow-x-auto no-scrollbar">
       <table class="table rounded-sm" id="table">
@@ -94,6 +96,7 @@
       })
 
       $(function() {
+        // Datatable
         $('#table').DataTable({
           processing: true,
           serverSide: true,
@@ -115,6 +118,44 @@
               searchable: false
             },
           ]
+        })
+
+        // Toggle Icon
+        $('#toggle').on('click', function() {
+          $('#info').fadeToggle();
+          if ($('#icon').hasClass('fa-eye')) {
+            $('#icon').removeClass('fa-eye').addClass('fa-eye-slash');
+          } else {
+            $('#icon').removeClass('fa-eye-slash').addClass('fa-eye');
+          }
+        })
+
+        // Delete
+        $(document).on('click', '.delete', function(e) {
+          e.preventDefault();
+          var id = $(this).data('id');
+          var url = $(this).attr('href');
+          Swal.fire({
+            title: 'Delete Confirmation',
+            text: 'Are you sure you want to delete this data? This will also delete the streetlights that use this group.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel'
+          }).then((result) => {
+            if (result.value) {
+              $.ajax({
+                type: "DELETE",
+                url: url,
+                data: {
+                  _token: '{{ csrf_token() }}',
+                },
+                success: function(res) {
+                  location.reload();
+                },
+              });
+            }
+          })
         })
       })
     </script>

@@ -12,7 +12,7 @@
         </button>
       </form>
       <div class="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6" id="info">
-        <div class="w-full lg:h-full h-80 shadow-sm" id="map"></div>
+        <div class="w-full h-72 shadow-sm" id="map"></div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <x-streetlight.images :streetlight="$streetlight" />
           <x-streetlight.streetlight :streetlight="$streetlight" />
@@ -74,7 +74,9 @@
           },
         })
       })
+
       $(function() {
+        // Datatable
         $('#table').DataTable({
           processing: true,
           serverSide: true,
@@ -107,6 +109,7 @@
           ]
         })
 
+        // Toggle icon
         $('#toggle').on('click', function() {
           $('#info').fadeToggle();
           if ($('#icon').hasClass('fa-eye')) {
@@ -115,16 +118,46 @@
             $('#icon').removeClass('fa-eye-slash').addClass('fa-eye');
           }
         })
+
+        // Delete
+        $(document).on('click', '.delete', function(e) {
+          e.preventDefault();
+          var id = $(this).data('id');
+          var url = $(this).attr('href');
+          Swal.fire({
+            title: 'Delete Confirmation',
+            text: 'Are you sure want to delete this data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel'
+          }).then((result) => {
+            if (result.value) {
+              $.ajax({
+                type: "DELETE",
+                url: url,
+                data: {
+                  _token: '{{ csrf_token() }}',
+                },
+                success: function(res) {
+                  location.reload();
+                },
+              });
+            }
+          })
+        })
       })
     </script>
     <script>
       @if ($streetlight)
-        var map = L.map('map').setView([{{ $streetlight->lat }}, {{ $streetlight->long }}], 16);
+        var latlng = [{{ $streetlight->lat }}, {{ $streetlight->long }}];
+        console.log(latlng);
+        var map = L.map('map').setView(latlng, 16);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-        var marker = L.marker([{{ $streetlight->lat }}, {{ $streetlight->long }}], {
+        var marker = L.marker(latlng, {
           icon: newIcon
         }).addTo(map);
       @endif

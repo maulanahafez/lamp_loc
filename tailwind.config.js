@@ -10,10 +10,14 @@ export default {
     },
     safelist: [
         "badge",
+        "badge-xs",
         "badge-secondary",
         "badge-primary",
         "badge-error",
         "badge-warning",
+        "badge-neutral",
+        "badge-success",
+        "badge-outline",
         "btn-success",
         "btn-error",
 

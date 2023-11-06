@@ -1,6 +1,6 @@
 <x-layout.main>
   @section('content')
-    @dump(Auth::user())
+    {{-- @dump(Auth::user()) --}}
   @endsection
 
   @section('js')

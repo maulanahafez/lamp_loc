@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('streetlight_group_id')->constrained('streetlight_groups')->cascadeOnUpdate()->restrictOnDelete();
             $table->unsignedSmallInteger('order')->nullable();
             $table->string('name');
-            $table->float('lat')->nullable();
-            $table->float('long')->nullable();
+            $table->float('lat', 10, 6)->nullable();
+            $table->float('long', 10, 6)->nullable();
             $table->string('type')->nullable();
             $table->string('status')->nullable();
             $table->string('model')->nullable();
