@@ -199,8 +199,6 @@
   @section('js')
     <script>
       $(function() {
-
-
         $('#streetlight_id').select2({
           ajax: {
             url: "{{ route('streetlight.get_streetlight') }}",

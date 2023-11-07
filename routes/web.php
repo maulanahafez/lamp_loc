@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home.index');
     Route::get('home/get_streetlights', 'get_streetlights')->name('home.get_streetlights');
+    Route::post('home/report_issue', 'report_issue')->name('home.report_issue');
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -39,8 +40,8 @@ Route::controller(StreetlightController::class)->middleware('auth')->group(funct
     Route::post('streetlight/store', 'store')->name('streetlight.store');
     Route::post('streetlight/set_session', 'set_session')->name('streetlight.set_session');
     Route::post('streetlight/clear_session', 'clear_session')->name('streetlight.clear_session');
-    Route::get('streetlight/get_streetlight', 'get_streetlight')->name('streetlight.get_streetlight');
-    Route::post('streetlight/get_streetlight_scan', 'get_streetlight_scan')->name('streetlight.get_streetlight_scan');
+    Route::get('streetlight/get_streetlight', 'get_streetlight')->name('streetlight.get_streetlight')->withoutMiddleware('auth');
+    Route::post('streetlight/get_streetlight_scan', 'get_streetlight_scan')->name('streetlight.get_streetlight_scan')->withoutMiddleware('auth');
     Route::get('streetlight/{streetlight}/show', 'show')->name('streetlight.show');
     Route::get('streetlight/{streetlight}/edit', 'edit')->name('streetlight.edit');
     Route::put('streetlight/{streetlight}/update', 'update')->name('streetlight.update');
